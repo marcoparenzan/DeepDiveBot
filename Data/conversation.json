@@ -1,0 +1,78 @@
+{
+  "apps": {
+    "DeepDiveBotIT": {
+      "key": "it-IT"
+    },
+    "DeepDiveBotEN": {
+      "key": "en-US"
+    }
+  },
+  "intents": {
+    "greetings": {
+      "it-IT": [ "ciao", "buongiorno", "come stai", "tutto bene", "ehila" ],
+      "en-US": [ "hello", "good morning", "hi", "welcome", "yo" ]
+    },
+    "myname": {
+      "it-IT": [ "mi chiamo [Marco:name]", "ciao io sono [Luca:name]", "Io sono [Giovanni:name]", "Mi presento sono [Giacomo:name]", "Piacere [Daniele:name]" ],
+      "en-US": [ "My name is [Marco:name]", "Hello I'm [Luca:name]", "I am [Giovanni:name]", "Please I introduce myself [Giacomo:name]", "[Daniele:name] nice to meet you" ]
+    },
+    "whattimeisit": {
+      "it-IT": [ "che ora è", "scusa mi dici l'ora", "non so che ora sia", "mi sai dire l'ora" ],
+      "en-US": [ "what time is it?", "please can you tell me the time", "I don't know what time is it", "give me the time" ]
+    }
+  },
+  "conversation": {
+    "greetings": {
+      "greetings": {
+        "newstate": "myname",
+        "response": "greetings"
+      },
+      "None": {
+        "newstate": "greetings",
+        "response": "notunderstood"
+      }
+    },
+    "myname": {
+      "myname": {
+        "newstate": "nextstep",
+        "response": "myname"
+      },
+      "None": {
+        "newstate": "myname",
+        "response": "notunderstood"
+      }
+    },
+    "nextstep": {
+      "whattimeisit": {
+        "newstate": "nextstep",
+        "response": "thetimeis"
+      },
+      "None": {
+        "newstate": "nextstep",
+        "response": "notunderstood"
+      }
+    }
+  },
+  "responses": {
+    "greetings": {
+      "it-IT": "Ciao come ti chiami?",
+      "en-US": "Hello what's your name"
+    },
+    "myname": {
+      "it-IT": "Ciao anche a te [name]. Cosa posso fare per te",
+      "en-US": "Hello to you [name]. What can I do for you"
+    },
+    "nextstep": {
+      "it-IT": "Cosa posso fare per te ora",
+      "en-US": "What can I do for you now"
+    },
+    "notunderstood": {
+      "it-IT": "Scusa non ho capito",
+      "en-US": "Sorry I have not understood"
+    },
+    "thetimeis": {
+      "it-IT": "Sono le {time}",
+      "en-US": "It's {time}"
+    }
+  }
+} 
