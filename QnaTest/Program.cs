@@ -10,7 +10,7 @@ namespace QnaTest
         static async Task Main(string[] args)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("EndpointKey", "3d2ad8e1-bf87-4476-9673-f4c80f4dfcae");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("EndpointKey", "");
 
             var requestBody = new {
                 question = "lego space"
@@ -19,7 +19,7 @@ namespace QnaTest
             var content = new StringContent(requestBodyJson);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync("https://mpqnademo.azurewebsites.net/qnamaker/knowledgebases/fdebed58-3849-4bb9-bbae-a2ac0498153b/generateAnswer", content);
+            var response = await client.PostAsync("https://mpqnademo.azurewebsites.net/qnamaker/knowledgebases//generateAnswer", content);
 
             var contentResponseString = await response.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<GeneratedAnswerResponse>(contentResponseString);
