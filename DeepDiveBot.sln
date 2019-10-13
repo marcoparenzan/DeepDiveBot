@@ -5,12 +5,9 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotApp", "BotApp\BotApp.csproj", "{061D8FF4-4754-48C3-B7E7-F07242F4A08B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotConversation", "BotConversation\BotConversation.csproj", "{4B3A5CC2-E064-48E5-B64F-8E01B228F0F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LUISEditorConsole", "LUISEditorConsole\LUISEditorConsole.csproj", "{C74E18DD-1596-4C57-A5FF-F92872F93E75}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{38F74885-B122-4177-9B8D-5AB7B07B0008}"
-	ProjectSection(SolutionItems) = preProject
-		Data\conversation.json = Data\conversation.json
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotConversation", "BotConversation\BotConversation.csproj", "{4B3A5CC2-E064-48E5-B64F-8E01B228F0F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +25,14 @@ Global
 		{061D8FF4-4754-48C3-B7E7-F07242F4A08B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{061D8FF4-4754-48C3-B7E7-F07242F4A08B}.Release|x64.ActiveCfg = Release|Any CPU
 		{061D8FF4-4754-48C3-B7E7-F07242F4A08B}.Release|x64.Build.0 = Release|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Debug|x64.Build.0 = Debug|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Release|x64.ActiveCfg = Release|Any CPU
+		{C74E18DD-1596-4C57-A5FF-F92872F93E75}.Release|x64.Build.0 = Release|Any CPU
 		{4B3A5CC2-E064-48E5-B64F-8E01B228F0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B3A5CC2-E064-48E5-B64F-8E01B228F0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B3A5CC2-E064-48E5-B64F-8E01B228F0F9}.Debug|x64.ActiveCfg = Debug|Any CPU

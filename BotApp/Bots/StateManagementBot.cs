@@ -1,9 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
+﻿using AdaptiveCards;
 using BotApp.Services;
+using BotConversation;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +14,24 @@ namespace BotApp
 {
     public class StateManagementBot : ActivityHandler
     {
+        private IConfiguration configuration;
         private BotState conversationState;
-        private BotConversation.Configuration conversationConfiguration;
+        private AssetManager assetManager;
         private LuisNLP luisNLP;
+        private BotConfiguration conversationConfiguration;
 
-        public StateManagementBot(ConversationState conversationState, BotConversation.Configuration conversationConfiguration, Services.LuisNLP luisNLP)
+        public StateManagementBot(ConversationState conversationState, BotConversation.AssetManager assetManager, Services.LuisNLP luisNLP, IConfiguration configuration)
         {
+            this.configuration = configuration;
             this.conversationState = conversationState;
-            this.conversationConfiguration = conversationConfiguration;
+            this.assetManager = assetManager;
             this.luisNLP = luisNLP;
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {
+            conversationConfiguration = assetManager.BotConfiguration(turnContext.Activity.TopicName ?? configuration["DefaultTopicName"]);
+
             await base.OnTurnAsync(turnContext, cancellationToken);
 
             // Save any state changes that might have occured during the turn.
@@ -49,7 +54,7 @@ namespace BotApp
 
             var activity = turnContext.Activity;
 
-            var culture = (activity.Locale ?? "it-IT");
+            var culture = (activity.Locale ?? configuration["DefaultLocale"]);
 
             var ok = true;
 
@@ -70,10 +75,29 @@ namespace BotApp
             var (intent, entities) = await luisNLP.Resolve(culture, text);
             var entitiesDict = entities.ToDictionary(xx => xx.name, xx => xx.value);
             var config = conversationConfiguration.Conversation[conversationData.CurrentState][intent];
-            textResponse = conversationConfiguration.Responses[config.Response][culture];
-            //if (entitiesDict.ContainsKey("name")) textResponse = textResponse.Replace("[name]", entitiesDict["name"], System.StringComparison.InvariantCultureIgnoreCase);
-            //if (textResponse.Contains("{time}", System.StringComparison.InvariantCultureIgnoreCase)) textResponse = textResponse.Replace("{time}", DateTime.Now.ToString("HH:mm"), System.StringComparison.InvariantCultureIgnoreCase);
-            conversationData.CurrentState = config.NewState;
+
+            //
+            //  let's do it!
+            //
+
+            // has response
+
+            if (config.Response.IsNotEmpty())
+            {
+                textResponse = conversationConfiguration.Responses[config.Response][culture];
+                //
+                //  fake logic
+                //  
+                if (entitiesDict.ContainsKey("name")) textResponse = textResponse.Replace("[name]", entitiesDict["name"], System.StringComparison.InvariantCultureIgnoreCase);
+                if (textResponse.Contains("{time}", System.StringComparison.InvariantCultureIgnoreCase)) textResponse = textResponse.Replace("{time}", DateTime.Now.ToString("HH:mm"), System.StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            // change state
+
+            if (config.NewState.IsNotEmpty())
+            {
+                conversationData.CurrentState = config.NewState;
+            }
 
             //
             //  response
@@ -88,7 +112,21 @@ namespace BotApp
                     Type = ActivityTypes.Message,
                     From = activity.Recipient,
                     Recipient = activity.From,
+                    Attachments = new List<Attachment>()
                 };
+                
+                // add adaptivecard if required
+                if (config.AdaptiveCard.IsNotEmpty())
+                {
+                    var adaptiveCardAttachment = new Attachment
+                    {
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = assetManager.AdaptiveCards(config.AdaptiveCard),
+                        Name = "AdaptiveCard"
+                    };
+                    activityResponse.Attachments.Add(adaptiveCardAttachment);
+                }
+
                 if (isSpeak)
                     activityResponse.Speak = textResponse;
                 else

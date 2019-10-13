@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BotConversation
 {
-    public class Configuration
+    public class BotConfiguration
     {
         [JsonProperty("apps")]
         public AppsConfiguration Apps { get; set; }
@@ -55,5 +55,7 @@ namespace BotConversation
         public string NewState { get; set; }
         [JsonProperty("response")]
         public string Response { get; set; }
+        [JsonProperty("adaptiveCard")]
+        public string AdaptiveCard { get; set; }
     }
 }

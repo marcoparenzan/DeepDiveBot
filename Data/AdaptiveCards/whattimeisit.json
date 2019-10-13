@@ -1,0 +1,23 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+      {
+          "type": "ColumnSet",
+          "columns": [
+              {
+                  "type": "Column",
+                  "items": [
+                      {
+                          "type": "Image",
+                          "url": "https://mpdeepdivebot.blob.core.windows.net/adaptivecards/flat-clock-icon-png-26.jpg",
+                          "size":"large"
+                      }
+                  ],
+                  "width": "auto"
+              }
+          ]
+      }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}

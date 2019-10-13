@@ -45,6 +45,7 @@
     "nextstep": {
       "whattimeisit": {
         "newstate": "nextstep",
+        "adaptivecard": "whattimeisit",
         "response": "thetimeis"
       },
       "None": {

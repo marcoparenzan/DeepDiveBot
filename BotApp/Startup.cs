@@ -28,7 +28,7 @@ namespace BotApp
             // Create the User state.
             services.AddSingleton<UserState>();
 
-            services.AddSingleton(xx => JsonConvert.DeserializeObject<BotConversation.Configuration>(File.ReadAllText("../Data/conversation.json")));
+            services.AddSingleton(xx => new BotConversation.AssetManager("../Data"));
 
             services.AddSingleton<Services.LuisNLP>();
             
